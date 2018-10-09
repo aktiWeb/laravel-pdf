@@ -20,6 +20,8 @@ class Pdf {
 		$this->config = $config;
 
 		$mpdf_config = [
+			'PDFA'                 =>   $this->getConfig('PDFA'),
+			'PDFAauto'             =>   $this->getConfig('PDFAauto'),
 			'mode'                 =>   $this->getConfig('mode'),              // mode - default ''
 			'format'               =>   $this->getConfig('format'),            // format - A4, for example, default ''
 			'margin_left'          =>   $this->getConfig('margin_left'),       // margin_left
