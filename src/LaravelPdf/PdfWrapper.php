@@ -1,6 +1,6 @@
 <?php
 
-namespace niklasravnsborg\LaravelPdf;
+namespace aktiWeb\LaravelPdf;
 
 use File;
 use View;

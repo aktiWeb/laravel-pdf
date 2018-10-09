@@ -1,6 +1,8 @@
 <?php
 
 return [
+	'PDFA'                  => true,
+	'PDFAauto'              => true,
 	'mode'                  => 'utf-8',
 	'format'                => 'A4',
 	'author'                => '',
