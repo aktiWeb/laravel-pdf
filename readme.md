@@ -66,12 +66,14 @@ If you have published config file, you can change the default settings in `confi
 
 ```php
 return [
-	'format'           => 'A4', // See https://mpdf.github.io/paging/page-size-orientation.html
-	'author'           => 'John Doe',
-	'subject'          => 'This Document will explain the whole universe.',
-	'keywords'         => 'PDF, Laravel, Package, Peace', // Separate values with comma
-	'creator'          => 'Laravel Pdf',
-	'display_mode'     => 'fullpage'
+	'PDFA'         => true,
+	'PDFAauto'     => true,
+	'format'       => 'A4', // See https://mpdf.github.io/paging/page-size-orientation.html
+	'author'       => 'John Doe',
+	'subject'      => 'This Document will explain the whole universe.',
+	'keywords'     => 'PDF, Laravel, Package, Peace', // Separate values with comma
+	'creator'      => 'Laravel Pdf',
+	'display_mode' => 'fullpage'
 ];
 ```
 
@@ -166,7 +168,29 @@ function generate_pdf() {
 }
 ```
 
-Find more information to `SetProtection()` here: https://mpdf.github.io/reference/mpdf-functions/setprotection.html
+Find more information to `SetProtection()` here: https://mpdf.github.io/what-else-can-i-do/pdf-a3-xmp-rdf.html
+
+## Attach XML-File (ZUGFeRD)
+
+```php
+$pdf = PDF::loadView(...);
+$pdf->associateFile([
+  'name' => 'public_filename.xml',
+  'mime' => 'text/xml',
+  'description' => 'some description',
+  'AFRelationship' => 'Alternative',
+  'path' => __DIR__ . '/../data/xml/test.xml']);
+$rdf = '<rdf:Description rdf:about="" xmlns:zf="urn:ferd:pdfa:CrossIndustryDocument:invoice:1p0#">'."\n";
+$rdf.= '  <zf:DocumentType>INVOICE</zf:DocumentType>'."\n";
+$rdf.= '  <zf:DocumentFileName>ZUGFeRD-invoice.xml</zf:DocumentFileName>'."\n";
+$rdf.= '  <zf:Version>1.0</zf:Version>'."\n";
+$rdf.= '  <zf:ConformanceLevel>BASIC</zf:ConformanceLevel>'."\n";
+$rdf.= '</rdf:Description>'."\n";
+$pdf->setXmpRdf($rdf);
+$pdf->save($localFile);
+```
+
+Find more about associated files and additional XMP RDF here: https://mpdf.github.io/reference/mpdf-functions/setprotection.html
 
 ## License
 
